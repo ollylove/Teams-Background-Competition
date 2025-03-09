@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <meta charset="utf-8">
+        <title>Teams Background Competition Ratings</title>
+        <link href="style/style.css?v=3.4" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th class="firstJudge"><input type="text" placeholder="First Judge Name"></th>
+                    <th class="secondJudge"><input type="text" placeholder="Second Judge Name"></th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="template">
+                    <td class="text-center check">
+                        <input type="checkbox" checked>
+                    </td>
+                    <td class="name"></td>
+                    <td class="rating rating1 disabled">
+                        <input type="text" placeholder="or type custom rating" maxlength="5" class="number">
+                        <svg data-rating="5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                    </td>
+                    <td class="rating rating2 disabled">
+                        <input type="text" placeholder="or type custom rating" maxlength="5" class="number">
+                        <svg data-rating="5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                        <svg data-rating="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 245">
+                            <path d="m56,237 74-228 74,228L10,96h240"/>
+                        </svg>
+                    </td>
+                    <td class="total"></td>
+                </tr>
+                <tr class="addNew">
+                    <td colspan="2"></td>
+                    <td colspan="2" class="text-center">
+                        <input type="text" placeholder="Type participant name & press enter...">
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right" colspan="2"><strong>Criteria:</strong></td>
+                    <td colspan="3"><input type="text" placeholder="example: The more colorful bg, the more points awarded"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script>           
+            $(document).ready(function() {
+                const Names = []
+
+                $(document).on("keyup", ".addNew input", function(e) {
+                    if ($(this).val() == "") {
+                        return
+                    } else {
+                        if (e.which == 13) {
+                            Names.push($(this).val())
+                            createTable(Names[Names.length - 1])
+                            $(this).val("")
+                        }
+                    }
+                }).on("keyup change", ".firstJudge input", function() {
+                    $(this).removeClass("shake")
+                    if ($(this).val() == "") {
+                        $("table tbody .rating1").addClass("disabled")
+                        $("table tbody .rating1 svg").removeClass("hover")
+                        $("table tbody .rating1 .number").val("")
+                        recalcLowest()
+                    } else {
+                        $("table tbody tr:not(.template) .rating1").removeClass("disabled")
+                    }
+                }).on("keyup change", ".secondJudge input", function() {
+                    $(this).removeClass("shake")
+                    if ($(this).val() == "") {
+                        $("table tbody .rating2").addClass("disabled")
+                        $("table tbody .rating2 svg").removeClass("hover")
+                        $("table tbody .rating2 .number").val("")
+                        recalcLowest()
+                    } else {
+                        $("table tbody tr:not(.template) .rating2").removeClass("disabled")
+                    }
+                }).on("click", "input[type='checkbox']", function() {
+                    var $this = $(this)
+                    $this.parents("tr").toggleClass("disabled").removeClass("lowest")
+                    $this.parents("tr").find("svg").removeClass("hover")
+                    $this.parents("tr").find(".total").text("")
+                    calcLowest($this)
+                }).on("click", ".rating svg", function() {
+                    var $this = $(this)
+                    var total = $this.parents("tr").find(".total")
+                    $this.parents("tr").find(".number").val("")
+                    $this.parent().find("svg").removeClass("hover")
+                    $this.addClass("hover")
+                    total.text("")
+                    $this.parents("tr").find("svg.hover").each(function() {
+                        total.text(+(total.text()) + +($(this).attr("data-rating")))
+                    })
+                    calcLowest($this)
+                }).on("keyup", ".rating .number", function() {
+                    var $this = $(this)
+                    var total = $this.parents("tr").find(".total")
+                    if (isNaN($this.val())) $this.val("")
+                    $this.parents("tr").find("svg").removeClass("hover")
+                    total.text("")
+                    $this.parents("tr").find(".number").each(function() {
+                        var $thisVal = +($(this).val())
+                        var totalVal = +(total.text())
+                        var totalText = $thisVal + totalVal
+                        total.text(Math.round(totalText * 100) / 100)
+                    })
+                    calcLowest($this)
+                }).on("mousedown", ".rating.disabled", function() {
+                    $("th input").each(function() {
+                        if ($(this).val() == "") $(this).addClass("shake")
+                        setTimeout(() => {
+                            $(this).removeClass("shake")
+                        }, 300);
+                    })
+                })
+
+                setInterval(() => {
+                    $("body").css("background-image", "url('images/" + Math.floor(Math.random() * 10) + ".gif')")
+                }, 10000);
+            })
+
+            function createTable(value, index) {
+                var tableRow = $("table tbody .template")
+                tableRow.find(".name").text(value)
+                var newRow = tableRow.clone()
+                newRow.removeClass("template")
+                if ($(".firstJudge input").val() != "") newRow.find(".rating1").removeClass("disabled")
+                if ($(".secondJudge input").val() != "") newRow.find(".rating2").removeClass("disabled")
+                $("table tbody").prepend(newRow)
+            }
+
+            function calcLowest($this) {
+                var lowest = 99999 * 2
+                $this.parents("tr").addClass("lowest")
+                $(".total").each(function() {
+                    if ($(this).text() != "") {
+                        var thisVal = +($(this).text())
+                        if (thisVal < lowest) {
+                            lowest = thisVal
+                            $("table tbody tr").not($(this).parents("tr")).removeClass("lowest")
+                            $(this).parents("tr").addClass("lowest")
+                        }
+                        if (thisVal > lowest) $(this).parents("tr").removeClass("lowest")
+                        if (thisVal == lowest) $(this).parents("tr").addClass("lowest")
+                        if (thisVal == 0) $(this).parents("tr").removeClass("lowest").find(".total").text("")
+                    } else $(this).parents("tr").removeClass("lowest")
+                })
+            }
+
+            function recalcLowest() {
+                $("table tbody tr .total").text("")
+                $("table tbody tr").not(".disabled").not(".template").not(".addNew").each(function() {
+                    var $this = $(this)
+                    var total = $this.find(".total")
+                    if ($this.find("svg.hover").length > 0) {
+                        $this.find("svg.hover").each(function() {
+                            total.text(+(total.text()) + +($(this).attr("data-rating")))
+                        })
+                        calcLowest($this.find("svg.hover"))
+                    }
+                    else {
+                        $this.find(".number").each(function() {
+                            var $thisVal = +($(this).val())
+                            var totalVal = +(total.text())
+                            var totalText = $thisVal + totalVal
+                            total.text(Math.round(totalText * 100) / 100)
+                        })
+                        calcLowest($this.find(".number"))
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

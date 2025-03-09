@@ -1,0 +1,208 @@
+* {
+  box-sizing: border-box;
+  transition: all 0.2s linear;
+}
+
+body {
+  padding: 40px 20px;
+  margin: 0;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-image: url("../images/0.gif");
+  background-color: midnightblue;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+table {
+  width: 100%;
+  max-width: 1000px;
+  border-collapse: collapse;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.8);
+  align-self: safe center;
+}
+
+table td, table th {
+  text-align: left;
+  vertical-align: middle;
+  border: 1px solid darkslateblue;
+  padding: 7px 10px;
+  line-height: 100%;
+}
+
+table tfoot td {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+input {
+  border-radius: 4px;
+  border: 1px solid grey;
+  background: none;
+  color: white;
+  border-radius: 4px;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 5px;
+  font-size: 20px;
+}
+
+input.number {
+  width: 160px;
+  padding: 3px;
+  font-size: 14px;
+  float: right;
+  margin: 5px 0;
+  direction: ltr;
+  text-align: right;
+}
+
+input.number.disabled {
+  pointer-events: none;
+  color: grey;
+  opacity: 0.7;
+}
+
+input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 3px 1px lavender;
+}
+
+input.shake {
+  animation: shake 0.3s linear;
+}
+
+@keyframes shake {
+  0%, 50% {
+    border: 1px solid fuchsia;
+    transform: translateX(-5px);
+    background: rgba(255, 0, 255, 0.5);
+  }
+  25%, 100% {
+    border: 1px solid fuchsia;
+    transform: translateX(5px);
+  }
+}
+svg {
+  width: 25px;
+  height: 25px;
+  fill: wheat;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+svg:hover, svg.hover {
+  fill: orange;
+}
+
+svg:hover ~ svg, svg.hover ~ svg {
+  fill: orange;
+}
+
+.check {
+  filter: hue-rotate(70deg);
+}
+
+.name {
+  text-transform: capitalize;
+}
+
+.disabled {
+  background: rgba(0, 0, 0, 0.9);
+  color: grey;
+}
+
+.disabled svg {
+  fill: grey;
+  pointer-events: none;
+}
+
+.disabled input[type=text] {
+  pointer-events: none;
+  color: grey;
+  opacity: 0.7;
+}
+
+.disabled td {
+  font-size: 16px;
+  padding: 2px 10px;
+}
+
+.lowest {
+  background: rgba(255, 0, 255, 0.4);
+}
+
+.rating {
+  direction: rtl;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
+}
+
+.addNew {
+  background: rgba(72, 61, 139, 0.5);
+}
+
+.template {
+  display: none;
+}
+
+::-webkit-input-placeholder {
+  color: lavender;
+  opacity: 0.5;
+}
+
+::placeholder {
+  color: lavender;
+  opacity: 0.5;
+}
+
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+
+/*# sourceMappingURL=style.css.map */
